@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body>
+    <h2>Products</h2>
+    <div>
+        <h3>Categories</h3>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'product_list_by_category' category.id %}">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h3>Products</h3>
+        <ul>
+            {% for product in products %}
+                <li>
+                    {{ product.name }} - ${{ product.price }}
+                    <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+                    <a href="{% url 'add_review' product.id %}">Review</a>
+                    <ul>
+                        {% for review in product.reviews.all %}
+                            <li>{{ review.user.username }}: {{ review.rating }}/5 - {{ review.comment }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
